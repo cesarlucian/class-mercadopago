@@ -44,6 +44,8 @@ $mercadopago->setPlan($mercadopago->getDataCurl());
 $mercadopago = new MercadoPago();
 
 $datapost->idplano = ID do plano do mercadopago, pode ser encontrado em MercadoPago > Minha Conta > Planos de Assinatura ou no retorno do metodo setPlan() e getPlan();
+ideal salvar o id de um plano criado no banco de dados para utilizar depois em cancelamento de assinatura, e etc...
+
 $mercadopago->setSignature($datapost->idplano, $datapost->token, $datapost->payer->email);
 
 -- EXEMPLO CANCELANDO ASSINATURA --
@@ -178,7 +180,7 @@ if($mercadopago->paymentResponse("status") == "approved")
 *
 * - ASSINATURAS -
 *
-* @param $plan     = Plano criado
+* @param $plan           = Plano criado
 * @param $free_trial     = Define um período de teste inicial e retarda a primeira cobrança.
 * @param $auto_recurring = Indica o tempo ou ciclo com base no tipo de frequência.
 * @param $dataCurl       = Array com os dados necessarios no CURL para criar um plano no mercado pago
