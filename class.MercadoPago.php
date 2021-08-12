@@ -199,7 +199,7 @@ if($mercadopago->paymentResponse("status") == "approved")
 class MercadoPago
 {
 	const PUBLIC_KEY              = "";
-	const ACCESS_TOKEN            = "APP_USR-3772728885875445-081216-2e8e669c33a8de4e8a180ef5d4a62169-782779792";
+	const ACCESS_TOKEN            = "";
 	const URL_JS                  = "https://sdk.mercadopago.com/js/v2";
 
 	const BACK_URL                = "https://www.mercadopago.com.br";
