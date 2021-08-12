@@ -2,8 +2,6 @@
 
 require_once("vendor/autoload.php");
 
-// Por enquanto apenas cartão de crédito depois tera outros metodos de pagamento...
-
 /*
 
 -- EXEMPLO CRIANDO PLANO -- 
@@ -199,7 +197,7 @@ if($mercadopago->paymentResponse("status") == "approved")
 class MercadoPago
 {
 	const PUBLIC_KEY              = "";
-	const ACCESS_TOKEN            = "";
+	const ACCESS_TOKEN            = "APP_USR-3772728885875445-081216-2e8e669c33a8de4e8a180ef5d4a62169-782779792";
 	const URL_JS                  = "https://sdk.mercadopago.com/js/v2";
 
 	const BACK_URL                = "https://www.mercadopago.com.br";
@@ -329,7 +327,7 @@ class MercadoPago
 
 	public function refund($payment_id)
 	{
-		$payment = new MercadoPago\Payment::find_by_id($payment_id);
+		$payment = MercadoPago\Payment::find_by_id($payment_id);
 		$payment->refund();
 	}
 
@@ -381,16 +379,17 @@ class MercadoPago
 	* @author Base em Tecnologia
 	* @access public
 	*
-	* @param $payer_email = email do pagador necessario para buscar sua assinatura ativa
-	* @param $payer_id = id do pagador , não e necessario, apenas se precisar atualizar algo no banco de dados
+	* @param $find_by = nome do campo q sera usado pra buscar a assinatura
+	* @param $find_by_value = valor do campo q sera usado para buscar a assinatura
 	*
 	* @return free_trial
 	* Data: 11/08/2021
 	*/
 
-	public function getSignaturePayer($payer_email, $payer_id = null)
-	{
-		$url = self::URL_GET_PAYER_SIGNATURE . "payer_email=" . $payer_email;
+	public function getSignaturePayer($find_by, $find_by_value)
+	{	
+		$find_url = $find_by . "=" . $find_by_value;
+		$url = self::URL_GET_PAYER_SIGNATURE . $find_url;
 
 		$curl = curl_init($url);
 		curl_setopt($curl, CURLOPT_URL, $url);
