@@ -199,13 +199,13 @@ if($mercadopago->paymentResponse("status") == "approved")
 class MercadoPago
 {
 	const PUBLIC_KEY              = "";
-	const ACCESS_TOKEN            = "";
+	const ACCESS_TOKEN            = "APP_USR-3772728885875445-081216-2e8e669c33a8de4e8a180ef5d4a62169-782779792";
 	const URL_JS                  = "https://sdk.mercadopago.com/js/v2";
 
 	const BACK_URL                = "https://www.mercadopago.com.br";
 
 	const URL_CREATE_PLAN         = "https://api.mercadopago.com/preapproval_plan";
-	const URL_GET_PAYER_SIGNATURE = "https://api.mercadopago.com/preapproval/search?";
+	const URL_GET_PAYER_SIGNATURE = "https://api.mercadopago.com/preapproval/search?status=";
 	const URL_CANCEL_SIGNATURE    = "https://api.mercadopago.com/preapproval/";
 	const URL_CREATE_SIGNATURE    = "https://api.mercadopago.com/preapproval";
 	const URL_CREATE_TEST_USER    = "https://api.mercadopago.com/users/test_user";
@@ -381,17 +381,19 @@ class MercadoPago
 	* @author Base em Tecnologia
 	* @access public
 	*
-	* @param $find_by = nome do campo q sera usado pra buscar a assinatura
+	* @param $find_by = nome do campo q sera usado pra buscar a assinatura (pode ser preapproval_plan_id = id do plano, preapproval_id = id assinatura, payer_email = email pagador)
 	* @param $find_by_value = valor do campo q sera usado para buscar a assinatura
+	* @param $status = status da assinatura que voce deseja buscar, por padrao as ativas, mas pode ser usado cancelled e paused
 	*
 	* @return free_trial
 	* Data: 11/08/2021
 	*/
 
-	public function getSignaturePayer($find_by, $find_by_value)
+	public function getSignaturePayer($find_by, $find_by_value, $status = "authorized")
 	{	
 		$find_url = $find_by . "=" . $find_by_value;
-		$url = self::URL_GET_PAYER_SIGNATURE . $find_url;
+
+		$url = self::URL_GET_PAYER_SIGNATURE . $status . "&" . $find_url;
 
 		$curl = curl_init($url);
 		curl_setopt($curl, CURLOPT_URL, $url);
@@ -409,8 +411,6 @@ class MercadoPago
 		curl_close($curl);
 	
 		$resp = json_decode($resp);
-
-		var_dump($resp);
 
 		$this->signature = $resp->results[0];
 	}
@@ -435,16 +435,15 @@ class MercadoPago
 
 		$url = self::URL_CANCEL_SIGNATURE . $signature_id;
 
+		$data = '{"status": "cancelled"}';
+
 		$curl = curl_init($url);
+
 		curl_setopt($curl, CURLOPT_URL, $url);
 		curl_setopt($curl, CURLOPT_PUT, true);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-
 		curl_setopt($curl, CURLOPT_HTTPHEADER, $this->getHeaders());
-
-		$data = ["status" => $status];
-
-		curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
