@@ -192,7 +192,7 @@ if($mercadopago->paymentResponse("status") == "approved")
 /**
 * @package Classe: MercadoPago
 * Descrição: Responsável em fornecer métodos de manipulação e integração com mercado pago
-* @author Base em Tecnologia
+* @author Cesar Luciano
 * Data: 11/08/2021
 */
 
@@ -236,7 +236,7 @@ class MercadoPago
 	* @method Método: construtor 
 	* Descrição: Responsável por definir o ACESS TOKEN que pode ser obtido no menu credenciais do mercado pago
 	*
-	* @author Base em Tecnologia
+	* @author Cesar Luciano
 	* @access public
 	* @return 
 	*
@@ -253,7 +253,7 @@ class MercadoPago
 	* @method Método: payment() 
 	* Descrição: Responsável por enviar os dados de pagamento para a classe do mercado pago, estes dados são retornados no formulario pelo script JS do mercadopago
 	*
-	* @author Base em Tecnologia
+	* @author Cesar Luciano
 	* @access public
 	*
 	* @param $transaction_amount = valor do serviço, compra etc
@@ -292,7 +292,7 @@ class MercadoPago
 	* @method Método: payer() 
 	* Descrição: Responsável por enviar os dados do pagador para a classe do mercado pago, estes dados são retornados no formulario pelo script JS do mercadopago
 	*
-	* @author Base em Tecnologia
+	* @author Cesar Luciano
 	* @access public
 	*
 	* @param $email = email do pagador
@@ -318,7 +318,7 @@ class MercadoPago
 	* @method Método: setPlan() 
 	* Descrição: Responsável por reembolsar um valor na fatura do cartão
 	*
-	* @author Base em Tecnologia
+	* @author Cesar Luciano
 	* @access public
 	*
 	* @param $payment_id = id do pagamento
@@ -360,7 +360,7 @@ class MercadoPago
 	* @method Método: getPlan() 
 	* Descrição: Responsável retornar o objeto plan
 	*
-	* @author Base em Tecnologia
+	* @author Cesar Luciano
 	* @access public
 	*
 	* @param
@@ -378,7 +378,7 @@ class MercadoPago
 	* @method Método: getSignaturePayer() 
 	* Descrição: Responsável por buscar a assinatura ativa de um pagador
 	*
-	* @author Base em Tecnologia
+	* @author Cesar Luciano
 	* @access public
 	*
 	* @param $find_by = nome do campo q sera usado pra buscar a assinatura (pode ser preapproval_plan_id = id do plano, preapproval_id = id assinatura, payer_email = email pagador)
@@ -419,7 +419,7 @@ class MercadoPago
 	* @method Método: cancelSignature() 
 	* Descrição: Responsável por buscar a assinatura ativa de um pagador
 	*
-	* @author Base em Tecnologia
+	* @author Cesar Luciano
 	* @access public
 	*
 	* @param $status = cancelled para cancelar, paused = para pausar
@@ -429,35 +429,19 @@ class MercadoPago
 	* Data: 11/08/2021
 	*/
 
-	public function cancelSignature($signature_id, $status = "cancelled")
+	public function cancelSignature($signature_id)
 	{
-		$this->setHeaders("Content-Type: application/json", "Authorization: Bearer " . self::ACCESS_TOKEN);
+		$payment = MercadoPago\Preapproval::find_by_id($signature_id);
 
-		$url = self::URL_CANCEL_SIGNATURE . $signature_id;
-
-		$data = '{"status": "cancelled"}';
-
-		$curl = curl_init($url);
-
-		curl_setopt($curl, CURLOPT_URL, $url);
-		curl_setopt($curl, CURLOPT_PUT, true);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_HTTPHEADER, $this->getHeaders());
-		curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-
-		$resp = curl_exec($curl);
-		curl_close($curl);
-
-		$this->signature = json_decode($resp);
+		$payment->status = "cancelled";
+		$payment->update();
 	}
 
 	/**
 	* @method Método: setSignature() 
 	* Descrição: Responsável por efetuar a assinatura
 	*
-	* @author Base em Tecnologia
+	* @author Cesar Luciano
 	* @access public
 	*
 	* @param $preapproval_plan_id = id do plano do mercadopago
@@ -501,7 +485,7 @@ class MercadoPago
 	* @method Método: getSignature() 
 	* Descrição: Responsável retornar o objeto signature
 	*
-	* @author Base em Tecnologia
+	* @author Cesar Luciano
 	* @access public
 	*
 	* @param
@@ -519,7 +503,7 @@ class MercadoPago
 	* @method Método: getFreeTrial() 
 	* Descrição: Responsável retornar o objeto free_trial
 	*
-	* @author Base em Tecnologia
+	* @author Cesar Luciano
 	* @access public
 	*
 	* @param
@@ -537,7 +521,7 @@ class MercadoPago
 	* @method Método: setFreeTrial() 
 	* Descrição: Responsável definir as configurações de periodo de teste antes de começar o pagamento mensal
 	*
-	* @author Base em Tecnologia
+	* @author Cesar Luciano
 	* @access public
 	*
 	* @param $frequency_type = tipo de frequencia, meses, anos, dias..
@@ -558,7 +542,7 @@ class MercadoPago
 	/**
 	* @method Método: getAutoRecurring() 
 	* Descrição: Responsável retornar o objeto auto_recurring
-	* @author Base em Tecnologia
+	* @author Cesar Luciano
 	* @access public
 	*
 	* @param
@@ -576,7 +560,7 @@ class MercadoPago
 	* @method Método: setAutoRecurring() 
 	* Descrição: Responsavel por definir as configurações de recorrencia de uma assinatura
 	*
-	* @author Base em Tecnologia
+	* @author Cesar Luciano
 	* @access public
 	*
 	* @param $frequency = frequencia da recorrencia
@@ -607,7 +591,7 @@ class MercadoPago
 	* @method Método: getHeaders() 
 	* Descrição: Responsável retornar o objeto headers
 	*
-	* @author Base em Tecnologia
+	* @author Cesar Luciano
 	* @access public
 	*
 	* @param
@@ -625,7 +609,7 @@ class MercadoPago
 	* @method Método: setHeaders() 
 	* Descrição: Responsável definir o cabeçalho do CURL do mercado pago
 	*
-	* @author Base em Tecnologia
+	* @author Cesar Luciano
 	* @access public
 	*
 	* @param $contentType = tipo de conteudo que precisa ser enviado para o mercadopago
@@ -647,7 +631,7 @@ class MercadoPago
 	* @method Método: getIdentification() 
 	* Descrição: Responsável retornar o objeto identification
 	*
-	* @author Base em Tecnologia
+	* @author Cesar Luciano
 	* @access public
 	*
 	* @param
@@ -665,7 +649,7 @@ class MercadoPago
 	* @method Método: setIdentification() 
 	* Descrição: Responsável por definir os dados de identificação do pagador
 	*
-	* @author Base em Tecnologia
+	* @author Cesar Luciano
 	* @access public
 	*
 	* @param $type = tipo de documento
@@ -687,7 +671,7 @@ class MercadoPago
 	* @method Método: getDataCurl() 
 	* Descrição: Responsável retornar o objeto dataCurl
 	*
-	* @author Base em Tecnologia
+	* @author Cesar Luciano
 	* @access public
 	*
 	* @param
@@ -705,7 +689,7 @@ class MercadoPago
 	* @method Método: setDataCurl() 
 	* Descrição: Responsável por definir os dados do CURL de criar um plano do mercadopago
 	*
-	* @author Base em Tecnologia
+	* @author Cesar Luciano
 	* @access public
 	*
 	* @param $reason = descrição que irá aparecer na fatura do cartão
@@ -730,7 +714,7 @@ class MercadoPago
 	* @method Método: paymentResponse() 
 	* Descrição: Responsável por retornar a resposta do mercado pago
 	*
-	* @author Base em Tecnologia
+	* @author Cesar Luciano
 	* @access public
 	*
 	* @param $return = escolha entre 3 retornos , status, status_detail e id do pagamento
@@ -767,7 +751,7 @@ class MercadoPago
 	* Descrição: Criar um usuario de teste, limite de 10 usuarios de teste por conta mercadopago, anote os dados do usuario assim que gerar q ele ira funcionar.
 	* necessario acess token da produção...
 	*
-	* @author Base em Tecnologia
+	* @author Cesar Luciano
 	* @access public
 	*
 	* @return retorna a resposta do curl do mercadopago
@@ -808,7 +792,7 @@ class MercadoPago
 	* @method Método: getTestUser() 
 	* Descrição: Responsável retornar o objeto testuser
 	*
-	* @author Base em Tecnologia
+	* @author Cesar Luciano
 	* @access public
 	*
 	* @param
