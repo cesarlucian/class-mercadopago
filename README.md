@@ -1,33 +1,6 @@
 
 * //-- EXEMPLO CRIANDO PLANO -- 
 *
-* $plano = new Plano();
-*
-* $plano->setNome($_POST['nome']);
-* $plano->setSubtitulo($_POST['subtitulo']);
-* $plano->setDescricao($_POST['descricao']);
-* $plano->setRegramento($_POST['regramento']);
-* $plano->setValor($_POST['valor']);
-* $plano->setRecorrencia($_POST['recorrencia']);
-*
-* $mercadopago = new MercadoPago();
-*
-* switch ($plano->getRecorrencia()) {
-*     case 'Mensal':
-*     $frequency_type = "months";
-*     $frequency      = "1";
-*     break;
-*    
-*     case 'Anual':
-*     $frequency_type = "years";
-*     $frequency      = "1";
-*     break;
-*
-*     case 'Semestral':
-*     $frequency_type = "months";
-*     $frequency      = "6";
-*     break;
-* }
 *
 * $mercadopago->setFreeTrial($frequency_type, $frequency);
 * $mercadopago->setAutoRecurring($frequency, $frequency_type, (float)$plano->getValor(), "BRL", $mercadopago->getFreeTrial());
@@ -37,17 +10,12 @@
 * //-- EXEMPLO FAZENDO ASSINATURA -- 
 *
 * $mercadopago = new MercadoPago();
-*
-* // $datapost->idplano = ID do plano do mercadopago, pode ser encontrado em MercadoPago > Minha Conta > Planos de Assinatura ou no retorno do metodo *setPlan() e getPlan(); ideal salvar o id de um plano criado no banco de dados para utilizar depois em cancelamento de assinatura, e etc...*/
-*
-*
 * $mercadopago->setSignature($datapost->idplano, $datapost->token, $datapost->payer->email);
 *
 * //-- EXEMPLO CANCELANDO ASSINATURA --
 *
 * $mercadopago = new MercadoPago();
 * $mercadopago->cancelSignature(id_assinatura_aqui); (salve no banco o id da assinatura qnd criar uma assinatura com setSignature para utilizar depois)
-*
 *
 * //-- EXEMPLO PAGAMENTO NORMAL -- 
 *
