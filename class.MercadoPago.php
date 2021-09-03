@@ -80,8 +80,6 @@ if($mercadopago->paymentResponse("status") == "approved")
 /**
 *
 *
-* CONTROL F thats it
-*
 * @param $id = id do pagamento no retorno do mercado pago;
 * @param $status  = status do pagamento no retorno do mercadopago (approved, in_process, rejected)
 * @param $status_detail = detalhes do status no retorno do mercado pago
