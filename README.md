@@ -3,8 +3,8 @@
 *
 *
 * $mercadopago->setFreeTrial($frequency_type, $frequency);
-* $mercadopago->setAutoRecurring($frequency, $frequency_type, (float)$plano->getValor(), "BRL", $mercadopago->getFreeTrial());
-* $mercadopago->setDataCurl($plano->getNome(), $mercadopago->getAutoRecurring());
+* $mercadopago->setAutoRecurring($frequency, $frequency_type, (float)$valor, "BRL", $mercadopago->getFreeTrial());
+* $mercadopago->setDataCurl($nomeplano, $mercadopago->getAutoRecurring());
 * $mercadopago->setPlan($mercadopago->getDataCurl());
 *
 * //-- EXEMPLO FAZENDO ASSINATURA -- 
