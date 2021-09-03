@@ -1,7 +1,6 @@
 
 * //-- EXEMPLO CRIANDO PLANO -- 
 *
-*
 * $mercadopago->setFreeTrial($frequency_type, $frequency);
 * $mercadopago->setAutoRecurring($frequency, $frequency_type, (float)$valor, "BRL", $mercadopago->getFreeTrial());
 * $mercadopago->setDataCurl($nomeplano, $mercadopago->getAutoRecurring());
