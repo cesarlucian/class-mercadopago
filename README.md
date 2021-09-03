@@ -1,4 +1,4 @@
-/**
+
 * //-- EXEMPLO CRIANDO PLANO -- 
 *
 * $plano = new Plano();
@@ -157,4 +157,3 @@
 *     echo json_encode($retorno);
 * }
 *
-**/
