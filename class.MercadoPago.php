@@ -4,6 +4,9 @@ require_once("vendor/autoload.php");
 
 /*
 * 
+* @param $id = id do pagamento no retorno do mercado pago;
+* @param $status  = status do pagamento no retorno do mercadopago (approved, in_process, rejected)
+* @param $status_detail = detalhes do status no retorno do mercado pago
 * @param $paymentMercadoPago = onde o pagamento e realizado
 * @param $payerMercadoPago   = onde pegamos os dados do pagador
 * @param $response           = resposta para validar erros, salvar id de pagamento e etc
