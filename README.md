@@ -1,6 +1,4 @@
-/*
-
-//-- EXEMPLO CRIANDO PLANO -- 
+<!-- //-- EXEMPLO CRIANDO PLANO -- 
 
 $plano = new Plano();
 
@@ -157,6 +155,3 @@ else if($mercadopago->paymentResponse("status_detail") == "cc_rejected_other_rea
     $retorno = array('status' => "erro", 'mensagem' => $mensagem);
     echo json_encode($retorno);
 }
-
-*/
-
