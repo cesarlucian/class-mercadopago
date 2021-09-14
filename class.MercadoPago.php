@@ -639,6 +639,24 @@ class MercadoPago
 	{
 		return $this->testuser;
 	}
+
+	public function findById($type, $id)
+	{
+		switch($type) {
+	        case "payment":
+	            $payment = MercadoPago\Payment::find_by_id($id);
+	            break;
+	        case "plan":
+	            $plan = MercadoPago\Plan::find_by_id($id);
+	            break;
+	        case "subscription":
+	            $plan = MercadoPago\Subscription::find_by_id($id);
+	            break;
+	        case "invoice":
+	            $plan = MercadoPago\Invoice::find_by_id($id);
+	            break;
+    	}
+	}
 }
 
 ?>
